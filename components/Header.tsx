@@ -1,6 +1,5 @@
 "use client";
 
-import useMediaQuery from "@/hooks/useMediaQuery";
 import React from "react";
 import MobileHeader from "./MobileHeader";
 import Image from "next/image";
@@ -9,23 +8,23 @@ import Button from "./Button";
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
+  // NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-  NavigationMenuViewport,
+  // NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { useWindowScroll } from "@uidotdev/usehooks";
 import { cn } from "@/lib/utils";
 
 export default function Header() {
-  const [{ x, y }, scrollTo] = useWindowScroll();
+  const [{ y }] = useWindowScroll();
   return (
     <>
-      <div className={cn("h-20 sticky top-0 z-10 hidden lg:block overflow-hidden bg-white transition-all", y > 0 ? "shadow" : "")}>
+      <div className={cn("h-20 sticky top-0 z-10 hidden lg:block overflow-hidden bg-white transition-all", y ? "shadow" : "")}>
         <div className="max-w-[1280px] px-10 mx-auto flex items-center justify-between overflow-hidden h-full">
           <Image
             src={"/apple-touch-icon.png"}

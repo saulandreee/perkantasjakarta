@@ -1,35 +1,32 @@
 "use client";
 
 import React from "react";
-import { ArrowLeft, HandHeart, ListFilter, Menu } from "lucide-react";
+import { ArrowLeft, HandHeart, Menu } from "lucide-react";
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
+  // DrawerDescription,
+  // DrawerFooter,
   DrawerHeader,
-  DrawerTitle,
+  // DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import Button from "./Button";
-import { cva } from "class-variance-authority";
 import { useWindowScroll } from "@uidotdev/usehooks";
 
 export default function MobileHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  const navItemStyle = cva("");
-  const [{ x, y }, scrollTo] = useWindowScroll();
+  const [{ y }] = useWindowScroll();
 
   return (
     <div
       className={cn(
         "bg-white h-16 w-full px-2.5 flex items-center justify-between sticky top-0 z-10 overflow-hidden",
-        y > 0 ? "shadow-sm" : "",
+        y ? "shadow-sm" : "",
         className
       )}
       {...props}

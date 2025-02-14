@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { useState, useEffect } from "react";
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Image from "next/image";
+import { Article } from "@/types/article";
+import { Story } from "@/types/story";
 
-export default function StoryCarousel({ data }) {
+export default function StoryCarousel({ data }: { data: Array<Story> }) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -34,11 +36,11 @@ export default function StoryCarousel({ data }) {
     return () => clearInterval(intervalId);
   }, [api]);
 
-  const handleResetClick = useCallback(() => {
-    if (api) {
-      api.scrollTo(0);
-    }
-  }, [api]);
+  // const handleResetClick = useCallback(() => {
+  //   if (api) {
+  //     api.scrollTo(0);
+  //   }
+  // }, [api]);
 
   return (
     <Carousel
@@ -50,7 +52,7 @@ export default function StoryCarousel({ data }) {
       }}
     >
       <CarouselContent className="-ml-4">
-        {data.map((story, index) => (
+        {data.map((story: Story, index) => (
           <CarouselItem
             key={index}
             className="pl-4 basis-[70%] md:basis-1/4 lg:basis-1/5 2xl:basis-1/6"

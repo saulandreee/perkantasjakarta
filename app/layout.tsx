@@ -1,7 +1,6 @@
 import { DM_Serif_Text, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import Header from "@/components/Header";
 import RootLayoutWrapper from "@/components/RootLayoutWrapper";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -24,7 +23,8 @@ export const dm = DM_Serif_Text({ subsets: ["latin"], variable: "--font-dm", wei
 // };
 export const metadata = {
   title: "Perkantas Jakarta",
-  description: 'Perkantas memperlengkapi siswa, mahasiswa, dan alumni Kristen untuk menjadi garam dan terang bagi keluarga, gereja, masyarakat, dan bangsa.',
+  description:
+    "Perkantas memperlengkapi siswa, mahasiswa, dan alumni Kristen untuk menjadi garam dan terang bagi keluarga, gereja, masyarakat, dan bangsa.",
   keywords: [
     "Perkantas",
     "Perkantas Jakarta",
@@ -68,15 +68,13 @@ export const metadata = {
     apple: "/apple-touch-icon.png",
   },
   // manifest: `${siteConfig.url}/site.webmanifest`,
-}
-
+};
 
 interface RootLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-
   return (
     <html lang="en">
       <body className={cn("bg-cinnabar-50/10 font-inter", inter.variable, dm.variable)}>

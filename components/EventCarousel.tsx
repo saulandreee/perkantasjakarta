@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import React from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+  // CarouselNext,
+  // CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { EventCard } from "@/types/event";
 
@@ -45,9 +44,9 @@ export default function EventCarousel({ data }: { data: Array<EventCard> }) {
     return () => clearInterval(intervalId);
   }, [api]);
 
-  const handleResetClick = React.useCallback(() => {
-    api?.scrollTo(0);
-  }, [api]);
+  // const handleResetClick = React.useCallback(() => {
+  //   api?.scrollTo(0);
+  // }, [api]);
 
   return (
     <Carousel

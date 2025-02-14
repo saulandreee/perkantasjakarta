@@ -2,12 +2,15 @@ import Image from "next/image";
 import React from "react";
 import Button from "./Button";
 import Link from "next/link";
-import { EventCard as EventCardType} from "@/types/event";
+import { EventCard as EventCardType } from "@/types/event";
 import { cn } from "@/lib/utils";
 
-export default function EventCard({ event, className, ...props }: {event: EventCardType, className: string}) {
+export default function EventCard({ event, className, ...props }: { event: EventCardType; className: string }) {
   return (
-    <div className={cn('grid gap-2 lg:gap-4', className)}>
+    <div
+      className={cn("grid gap-2 lg:gap-4", className)}
+      {...props}
+    >
       <div className="relative w-full aspect-square rounded-2xl overflow-hidden ">
         <Image
           src={"https://picsum.photos/300/300?random=1"}

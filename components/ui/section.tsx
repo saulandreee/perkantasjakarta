@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
-import React, { Children } from "react";
+import React from "react";
 
 interface SectionProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof sectionVariant> {}
 
@@ -25,32 +25,24 @@ const sectionVariant = cva("w-full px-2", {
   },
 });
 
-const Section = React.forwardRef<HTMLDivElement, SectionProps>(
-  ({ variant, backgroundColor, className, children, ...props }, ref) => {
-    return (
-      <div
-        className={cn(sectionVariant({ variant, backgroundColor }), className)}
-        {...props}
-      >
-        {children}
-      </div>
-    );
-  },
-);
+const Section = React.forwardRef<HTMLDivElement, SectionProps>(({ variant, backgroundColor, className, children, ...props }, ref) => {
+  return (
+    <div
+      className={cn(sectionVariant({ variant, backgroundColor }), className)}
+      {...props}
+      ref={ref}
+    >
+      {children}
+    </div>
+  );
+});
 
 Section.displayName = "Section";
 
-const SectionTitle = ({
-  className,
-  children,
-  ...props
-}: React.HTMLAttributes<HTMLHeadElement>) => {
+const SectionTitle = ({ className, children, ...props }: React.HTMLAttributes<HTMLHeadElement>) => {
   return (
     <h1
-      className={cn(
-        "text-[42px] leading-[130%] font-dm text-elephant-950 mb-4 lg:text-5xl",
-        className,
-      )}
+      className={cn("text-[42px] leading-[130%] font-dm text-elephant-950 mb-4 lg:text-5xl", className)}
       {...props}
     >
       {children}
@@ -58,17 +50,10 @@ const SectionTitle = ({
   );
 };
 
-const SectionSubtitle = ({
-  className,
-  children,
-  ...props
-}: React.HTMLAttributes<HTMLParagraphElement>) => {
+const SectionSubtitle = ({ className, children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => {
   return (
     <p
-      className={cn(
-        "text-xl px-8 text-elephant-700/80 mb-8 lg:px-0 lg:text-2xl",
-        className,
-      )}
+      className={cn("text-xl px-8 text-elephant-700/80 mb-8 lg:px-0 lg:text-2xl", className)}
       {...props}
     >
       {children}
@@ -76,19 +61,10 @@ const SectionSubtitle = ({
   );
 };
 
-const SectionHeader = ({
-  justify,
-  className,
-  children,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement> & { justify?: "left" | "center" }) => {
+const SectionHeader = ({ justify, className, children, ...props }: React.HTMLAttributes<HTMLDivElement> & { justify?: "left" | "center" }) => {
   return (
     <div
-      className={cn(
-        "",
-        justify === "left" ? "text-left" : "text-center",
-        className,
-      )}
+      className={cn("", justify === "left" ? "text-left" : "text-center", className)}
       {...props}
     >
       {children}

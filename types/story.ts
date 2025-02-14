@@ -1,9 +1,7 @@
-export type Article = {
+export type Story = {
   slug: string;
   title: string;
   image: string;
-  category: string;
-  created_at: string;
   author: string;
   community?: string;
 };
