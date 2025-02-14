@@ -1,4 +1,4 @@
-import { openGraph } from "../objects";
+import { defineField } from "sanity";
 
 export default {
   type: "object",
@@ -39,43 +39,43 @@ export default {
     },
   ],
   fields: [
-    {
+    defineField({
       type: "string",
       name: "site_name",
       title: "Site Name",
       group: ["og", "meta"],
       // fieldset: "optional"
-    },
-    {
+    }),
+    defineField({
       type: "text",
       name: "ogDescription",
       title: "Social Share Description",
       group: ["og", "meta"],
-    },
-    {
+    }),
+    defineField({
       type: "url",
       title: "URL",
       name: "url",
       description: "Most likely either the url of the page or its canonical url",
-      validation: (Rule: Rule) => Rule.required(),
+      validation: (Rule: { required: () => any }) => Rule.required(),
       group: ["og", "meta"],
       // fieldset: "basic"
-    },
-    {
+    }),
+    defineField({
       type: "string",
       title: "Page Title",
       name: "ogTitle",
       description: "Set the title Open Graph should use. In most situations, this should be different from the value of the title prop",
-      validation: (Rule: Rule) => Rule.required(),
+      validation: (Rule) => Rule.required(),
       // fieldset: "basic"
-    },
+    }),
     // {
     //   type: "image",
     //   title: "Image",
     //   name: "ogImage",
     //   description:
     //     "URL of the image that should be used in social media previews. If you define this, you must define two other OG basic properties as well: title and type.",
-    //   validation: (Rule: Rule) => Rule.required(),
+    //   validation: (Rule) => Rule.required(),
     //   group: ["og"],
     //   // fieldset: "basic"
     // },
@@ -126,8 +126,4 @@ export default {
     //   group: "manifest",
     // },
   ],
-  initialValue: {
-    isPwa: false,
-    isGoogleAnalyticsEnabled: false,
-  },
 };
