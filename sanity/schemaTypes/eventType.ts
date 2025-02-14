@@ -1,16 +1,16 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from "sanity";
 export const eventType = defineType({
-  name: 'event',
-  title: 'Events',
-  type: 'document',
+  name: "event",
+  title: "Events",
+  type: "document",
   fields: [
     defineField({
-      name: 'title',
-      type: 'string',
+      name: "title",
+      type: "string",
     }),
     defineField({
-      name: 'slug',
-      type: 'slug',
+      name: "slug",
+      type: "slug",
       options: {
         //Change to schema title to automatically populate
         source: "title",
@@ -25,16 +25,16 @@ export const eventType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'cover',
-      type: 'image',
+      name: "cover",
+      type: "image",
     }),
     defineField({
-      name: 'short_description',
-      type: 'string',
+      name: "short_description",
+      type: "string",
     }),
     defineField({
-      name: 'description',
-      type: 'string',
-    })
+      name: "description",
+      type: "string",
+    }),
   ],
-})
+});
