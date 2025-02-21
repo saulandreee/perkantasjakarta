@@ -7,6 +7,7 @@ import EventCard from "@/components/EventCard";
 import EventCarousel from "@/components/EventCarousel";
 import StoryCarousel from "@/components/StoryCarousel";
 import { Section, SectionHeader, SectionSubtitle, SectionTitle } from "@/components/ui/section";
+import { client } from "@/sanity/lib/client";
 import { faker } from "@faker-js/faker";
 import { Calendar } from "lucide-react";
 import { MailPlus } from "lucide-react";
@@ -334,207 +335,213 @@ export default async function Home() {
     },
   ];
 
+  const sanityEvents = await client.fetch(`*[_type == "event"]`);
+
+  console.log(sanityEvents);
+
   return (
-    <main className="">
-      <Head>
-        <link
-          rel="icon"
-          href="/favicon.ico"
-          sizes="any"
-        />
-      </Head>
-      <Section className="py-16">
-        <SectionHeader
-          className="max-w-[800px] mx-auto"
-          justify={"center"}
-        >
-          <SectionTitle>Student Today, Leader Tomorrow</SectionTitle>
-          <SectionSubtitle>
-            Melayani kaum intelektual muda, memperlengkapi mereka menjadi pemimpin masa depan yang perpegang erat pada Kristus.
-          </SectionSubtitle>
-          <div className="flex gap-2 justify-center">
-            <Button size={"lg"}>Lihat Kegiatan</Button>
-            <Button
-              variant="outline"
-              size={"lg"}
-            >
-              Tentang Kami
-            </Button>
-          </div>
-        </SectionHeader>
-      </Section>
-      <Section
-        variant={"full"}
-        className="py-16"
-      >
-        <Suspense fallback={<Loader className="animate-spin" />}>
-          <EventCarousel data={events} />
-        </Suspense>
-      </Section>
-      <Section className="py-16">
-        <SectionHeader className={"max-w-[600px] mx-auto"}>
-          <SectionTitle>Fokus Pelayanan Kami</SectionTitle>
-          <SectionSubtitle>Melayani siswa, mahasiswa, dan alumni di wilayah Jakarta dan sekitarnya.</SectionSubtitle>
-        </SectionHeader>
-
-        <div className="grid lg:grid-cols-3 gap-6">
-          {ministries.map((ministry) => {
-            return (
-              <div
-                key={ministry._id}
-                className="grid gap-4 h-fit w-full lg:max-w-[350px]"
+    <Suspense fallback={<Loader className="w-5 h-5 animate-spin" />}>
+      <main className="">
+        <Head>
+          <link
+            rel="icon"
+            href="/favicon.ico"
+            sizes="any"
+          />
+        </Head>
+        <Section className="py-16">
+          <SectionHeader
+            className="max-w-[800px] mx-auto"
+            justify={"center"}
+          >
+            <SectionTitle>Student Today, Leader Tomorrow</SectionTitle>
+            <SectionSubtitle>
+              Melayani kaum intelektual muda, memperlengkapi mereka menjadi pemimpin masa depan yang perpegang erat pada Kristus.
+            </SectionSubtitle>
+            <div className="flex gap-2 justify-center">
+              <Button size={"lg"}>Lihat Kegiatan</Button>
+              <Button
+                variant="outline"
+                size={"lg"}
               >
-                <div className="relative w-full !aspect-[7/4]">
-                  <Image
-                    src={ministry.cover}
-                    alt={ministry.name}
-                    className="object-cover w-full rounded-xl"
-                    fill
-                    priority
-                  />
-                </div>
-                <div className="px-2.5 lg:px-0">
-                  <h3 className="font-semibold text-xl lg:text-2xl">{ministry.abbreviation}</h3>
-                  <p className="text-base lg:text-lg text-elephant-700/80">{ministry.highlight}</p>
-                </div>
-                <Link href={ministry.slug}>
-                  <Button className={"w-fit"}>
-                    Pelayanan {ministry.community}
-                    <LucideArrowRight className="w-5 h-5" />
-                  </Button>
-                </Link>
-              </div>
-            );
-          })}
-        </div>
-      </Section>
-      <Section
-        className="lg:py-16"
-        variant={"full"}
-      >
-        <SectionHeader className={"mx-auto"}>
-          <SectionTitle>Apa Kata Mereka?</SectionTitle>
-          <SectionSubtitle>Dari yang melayani dan yang dilayani</SectionSubtitle>
-        </SectionHeader>
-        <StoryCarousel data={stories} />
-      </Section>
-      <Section className={"py-16"}>
-        <SectionHeader
-          justify={"left"}
-          className={"mb-8"}
-        >
-          <SectionTitle>Kegiatan Rutin dan Non Rutin</SectionTitle>
-          <ChipsFilter
-            onChange={async (selected) => {
-              "use server";
-              console.log(selected);
-            }}
-            options={[
-              { value: "all", label: "Semua", defaultActive: true },
-              { value: "siswa", label: "Siswa" },
-              { value: "mahasiswa", label: "Mahasiswa" },
-              { value: "alumni", label: "Alumni" },
-              { value: "misi", label: "Misi" },
-            ]}
-          />
-        </SectionHeader>
-        <div className="grid gap-3 grid-cols-2 md:gap-4 md:grid-cols-3 lg:gap-8 lg:grid-cols-5">
-          {allEvent.map((event, index) => (
-            <EventCard
-              key={index}
-              event={event}
-              className="h-fit"
-            />
-          ))}
-        </div>
-      </Section>
-      <Section variant={"full"}>
-        <Banner bgImage={"https://picsum.photos/1600/400?random=1"}>
-          <SectionHeader justify={"left"}>
-            <SectionTitle className={"text-white"}>Ingin bergabung di komunitas Perkantas?</SectionTitle>
-            <SectionSubtitle className={"text-white"}>Ikuti kegiatan terbaru kami atau hubungi kami untuk mengetahui lebih jauh.</SectionSubtitle>
+                Tentang Kami
+              </Button>
+            </div>
           </SectionHeader>
-          <div className="grid gap-4 lg:gap-8 lg:grid-cols-2">
-            <div className="rounded-2xl bg-white p-4">
-              <div className="pb-2.5 flex gap-2.5 items-center border-b">
-                <Calendar className="w-6 h-6" />
-                <p className="flex-1 lg:text-lg font-bold">Lihat jadwal kegiatan</p>
-              </div>
-              <div className="py-2.5">
-                <p>Ikuti kegiatan sesuai bagian Anda (siswa, mahasiswa, alumni).</p>
-              </div>
-            </div>
-            <div className="rounded-2xl bg-white p-4">
-              <div className="pb-2.5 flex gap-2.5 items-center border-b">
-                <MailPlus className="w-6 h-6" />
-                <p className="flex-1 lg:text-lg font-bold">Hubungi kami</p>
-              </div>
-              <div className="py-2.5">
-                <p>Hubungi kami melalui WhatsApp ataupun email untuk menanyakan tentang kami.</p>
-              </div>
-            </div>
-          </div>
-        </Banner>
-      </Section>
-      <Section className={"py-16"}>
-        <SectionHeader
-          justify={"left"}
-          className={"mb-8"}
+        </Section>
+        <Section
+          variant={"full"}
+          className="py-16"
         >
-          <SectionTitle>Artikel Terbaru</SectionTitle>
-          <ChipsFilter
-            onChange={async (selected) => {
-              "use server";
-              console.log(selected);
-            }}
-            options={[
-              { value: "all", label: "Semua", defaultActive: true },
-              { value: "kesaksian", label: "Kesaksian" },
-              { value: "testimony", label: "Testimoni" },
-              { value: "sharing", label: "Sharing" },
-              { value: "oratio", label: "Oratio" },
-            ]}
-          />
-        </SectionHeader>
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article) => (
-            <ArticleCard
-              key={article.title}
-              article={article}
+          <Suspense fallback={<Loader className="animate-spin" />}>
+            <EventCarousel data={events} />
+          </Suspense>
+        </Section>
+        <Section className="py-16">
+          <SectionHeader className={"max-w-[600px] mx-auto"}>
+            <SectionTitle>Fokus Pelayanan Kami</SectionTitle>
+            <SectionSubtitle>Melayani siswa, mahasiswa, dan alumni di wilayah Jakarta dan sekitarnya.</SectionSubtitle>
+          </SectionHeader>
+
+          <div className="grid lg:grid-cols-3 gap-6">
+            {ministries.map((ministry) => {
+              return (
+                <div
+                  key={ministry._id}
+                  className="grid gap-4 h-fit w-full lg:max-w-[350px]"
+                >
+                  <div className="relative w-full !aspect-[7/4]">
+                    <Image
+                      src={ministry.cover}
+                      alt={ministry.name}
+                      className="object-cover w-full rounded-xl"
+                      fill
+                      priority
+                    />
+                  </div>
+                  <div className="px-2.5 lg:px-0">
+                    <h3 className="font-semibold text-xl lg:text-2xl">{ministry.abbreviation}</h3>
+                    <p className="text-base lg:text-lg text-elephant-700/80">{ministry.highlight}</p>
+                  </div>
+                  <Link href={ministry.slug}>
+                    <Button className={"w-fit"}>
+                      Pelayanan {ministry.community}
+                      <LucideArrowRight className="w-5 h-5" />
+                    </Button>
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </Section>
+        <Section
+          className="lg:py-16"
+          variant={"full"}
+        >
+          <SectionHeader className={"mx-auto"}>
+            <SectionTitle>Apa Kata Mereka?</SectionTitle>
+            <SectionSubtitle>Dari yang melayani dan yang dilayani</SectionSubtitle>
+          </SectionHeader>
+          <StoryCarousel data={stories} />
+        </Section>
+        <Section className={"py-16"}>
+          <SectionHeader
+            justify={"left"}
+            className={"mb-8"}
+          >
+            <SectionTitle>Kegiatan Rutin dan Non Rutin</SectionTitle>
+            <ChipsFilter
+              onChange={async (selected) => {
+                "use server";
+                console.log(selected);
+              }}
+              options={[
+                { value: "all", label: "Semua", defaultActive: true },
+                { value: "siswa", label: "Siswa" },
+                { value: "mahasiswa", label: "Mahasiswa" },
+                { value: "alumni", label: "Alumni" },
+                { value: "misi", label: "Misi" },
+              ]}
             />
-          ))}
-        </div>
-      </Section>
+          </SectionHeader>
+          <div className="grid gap-3 grid-cols-2 md:gap-4 md:grid-cols-3 lg:gap-8 lg:grid-cols-5">
+            {allEvent.map((event, index) => (
+              <EventCard
+                key={index}
+                event={event}
+                className="h-fit"
+              />
+            ))}
+          </div>
+        </Section>
+        <Section variant={"full"}>
+          <Banner bgImage={"https://picsum.photos/1600/400?random=1"}>
+            <SectionHeader justify={"left"}>
+              <SectionTitle className={"text-white"}>Ingin bergabung di komunitas Perkantas?</SectionTitle>
+              <SectionSubtitle className={"text-white"}>Ikuti kegiatan terbaru kami atau hubungi kami untuk mengetahui lebih jauh.</SectionSubtitle>
+            </SectionHeader>
+            <div className="grid gap-4 lg:gap-8 lg:grid-cols-2">
+              <div className="rounded-2xl bg-white p-4">
+                <div className="pb-2.5 flex gap-2.5 items-center border-b">
+                  <Calendar className="w-6 h-6" />
+                  <p className="flex-1 lg:text-lg font-bold">Lihat jadwal kegiatan</p>
+                </div>
+                <div className="py-2.5">
+                  <p>Ikuti kegiatan sesuai bagian Anda (siswa, mahasiswa, alumni).</p>
+                </div>
+              </div>
+              <div className="rounded-2xl bg-white p-4">
+                <div className="pb-2.5 flex gap-2.5 items-center border-b">
+                  <MailPlus className="w-6 h-6" />
+                  <p className="flex-1 lg:text-lg font-bold">Hubungi kami</p>
+                </div>
+                <div className="py-2.5">
+                  <p>Hubungi kami melalui WhatsApp ataupun email untuk menanyakan tentang kami.</p>
+                </div>
+              </div>
+            </div>
+          </Banner>
+        </Section>
+        <Section className={"py-16"}>
+          <SectionHeader
+            justify={"left"}
+            className={"mb-8"}
+          >
+            <SectionTitle>Artikel Terbaru</SectionTitle>
+            <ChipsFilter
+              onChange={async (selected) => {
+                "use server";
+                console.log(selected);
+              }}
+              options={[
+                { value: "all", label: "Semua", defaultActive: true },
+                { value: "kesaksian", label: "Kesaksian" },
+                { value: "testimony", label: "Testimoni" },
+                { value: "sharing", label: "Sharing" },
+                { value: "oratio", label: "Oratio" },
+              ]}
+            />
+          </SectionHeader>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {articles.map((article) => (
+              <ArticleCard
+                key={article.title}
+                article={article}
+              />
+            ))}
+          </div>
+        </Section>
 
-      <Section
-        className="py-16 bg-elephant-700/20"
-        variant={"fullWithMaxContent"}
-      >
-        <DonationBanner />
-      </Section>
-      {/* <div>
-        <Button>Click me</Button>
-        <Button variant="outline">Click me</Button>
-        <Button variant="ghost">Click me</Button>
-        <Button variant="secondary">Click me</Button>
+        <Section
+          className="py-16 bg-elephant-700/20"
+          variant={"fullWithMaxContent"}
+        >
+          <DonationBanner />
+        </Section>
+        {/* <div>
+      <Button>Click me</Button>
+      <Button variant="outline">Click me</Button>
+      <Button variant="ghost">Click me</Button>
+      <Button variant="secondary">Click me</Button>
 
-        <Button variant="link">Click me</Button>
-      </div>
+      <Button variant="link">Click me</Button>
+    </div>
 
-      <div className="flex gap-2 px-2 items-end mt-6">
-        <Button size="lg">
-          Click me
-          <LucideAArrowDown className="w-5 h-5" />
-        </Button>
-        <Button>
-          <LucideAArrowDown className="w-5 h-5" />
-          Click me
-        </Button>
-        <Button size="icon">
-          <LucideMove className="w-4 h-4" />
-        </Button>
-        <Button size="sm">Click me</Button>
-      </div> */}
-    </main>
+    <div className="flex gap-2 px-2 items-end mt-6">
+      <Button size="lg">
+        Click me
+        <LucideAArrowDown className="w-5 h-5" />
+      </Button>
+      <Button>
+        <LucideAArrowDown className="w-5 h-5" />
+        Click me
+      </Button>
+      <Button size="icon">
+        <LucideMove className="w-4 h-4" />
+      </Button>
+      <Button size="sm">Click me</Button>
+    </div> */}
+      </main>
+    </Suspense>
   );
 }

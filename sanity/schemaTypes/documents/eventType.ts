@@ -37,5 +37,28 @@ export default defineType({
       name: "description",
       type: "string",
     }),
+    defineField({
+      name: "isRecurringEvent",
+      title: "Is event recurring?",
+      type: "boolean",
+    }),
+    defineField({
+      name: "eventDate",
+      title: "Event Date",
+      type: "datetime",
+      options: {
+        dateFormat: "YYYY-MM-DD",
+        timeFormat: "HH:mm",
+        timeStep: 15,
+      },
+      hidden: ({ document }) => !!document?.isRecurringEvent,
+    }),
+    defineField({
+      name: "recurringTime",
+      title: "Recurring Time",
+      description: "e.g. Every Saturday 10:00 AM - 12:00 PM",
+      type: "string",
+      hidden: ({ document }) => !document?.isRecurringEvent,
+    }),
   ],
 });
