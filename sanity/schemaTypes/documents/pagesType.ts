@@ -7,21 +7,34 @@ export default defineType({
   fields: [
     defineField({
       name: "sitemeta",
-      title: "Site MEta",
+      title: "Site Meta",
       type: "siteMeta",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "title",
-      title: "Title",
+      name: "pageTitle",
+      title: "Page Title",
       type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "components",
       title: "Components",
       type: "array",
-      of: [{ type: "textComponent" }, { type: "richTextComponent" }, { type: "imageComponent" }, { type: "linkComponent" }],
+      of: [
+        { type: "heroComponent" },
+        { type: "textHeaderComponent" },
+        { type: "textComponent" },
+        { type: "richTextComponent" },
+        { type: "imageComponent" },
+        { type: "linkComponent" },
+      ],
     }),
   ],
 });
