@@ -14,12 +14,13 @@ import { EventCard } from "@/types/event";
 
 import type { CarouselApi } from "@/components/ui/carousel";
 
-export default function EventCarousel({ data }: { data: Array<EventCard> }) {
+export default function EventCarousel({ data }: { data: EventCard[] }) {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
+    // console.log(data);
     if (!api) {
       return;
     }

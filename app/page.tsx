@@ -8,7 +8,8 @@ import EventCarousel from "@/components/EventCarousel";
 import StoryCarousel from "@/components/StoryCarousel";
 import { Section, SectionHeader, SectionSubtitle, SectionTitle } from "@/components/ui/section";
 import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
+import Events from "@/services/events";
+import Ministries from "@/services/ministries";
 import { faker } from "@faker-js/faker";
 import { Calendar } from "lucide-react";
 import { MailPlus } from "lucide-react";
@@ -336,12 +337,10 @@ export default async function Home() {
     },
   ];
 
-  const sanityEvents = await client.fetch(`*[_type == "event"]`);
+  const sanityEvents = await Events.getAllEvents();
+  const sanityMinistries = await Ministries.getAllMinistries();
 
   console.log(sanityEvents);
-
-  const imageUrl = urlFor(sanityEvents[0].cover).width(500).url();
-  console.log(imageUrl);
 
   const landingPageData = await client.fetch(`*[_type == "page" && slug.current == "/"][0]`);
   console.log(landingPageData);
@@ -381,7 +380,7 @@ export default async function Home() {
           className="py-16"
         >
           <Suspense fallback={<Loader className="animate-spin" />}>
-            <EventCarousel data={events} />
+            <EventCarousel data={sanityEvents} />
           </Suspense>
         </Section>
         <Section className="py-16">
