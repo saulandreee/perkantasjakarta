@@ -47,8 +47,8 @@ export default defineType({
       type: "imageComponent",
     }),
     defineField({
-      name: "short_description",
-      title: "Short Description",
+      name: "highlight",
+      title: "Highlight",
       type: "string",
     }),
     defineField({
