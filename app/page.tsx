@@ -8,6 +8,8 @@ import EventCarousel from "@/components/EventCarousel";
 import StoryCarousel from "@/components/StoryCarousel";
 import { Section, SectionHeader, SectionSubtitle, SectionTitle } from "@/components/ui/section";
 import { client } from "@/sanity/lib/client";
+import Events from "@/services/events";
+import Ministries from "@/services/ministries";
 import { faker } from "@faker-js/faker";
 import { Calendar } from "lucide-react";
 import { MailPlus } from "lucide-react";
@@ -335,9 +337,13 @@ export default async function Home() {
     },
   ];
 
-  const sanityEvents = await client.fetch(`*[_type == "event"]`);
+  const sanityEvents = await Events.getAllEvents();
+  const sanityMinistries = await Ministries.getAllMinistries();
 
   console.log(sanityEvents);
+
+  const landingPageData = await client.fetch(`*[_type == "page" && slug.current == "/"][0]`);
+  console.log(landingPageData);
 
   return (
     <Suspense fallback={<Loader className="w-5 h-5 animate-spin" />}>
@@ -374,7 +380,7 @@ export default async function Home() {
           className="py-16"
         >
           <Suspense fallback={<Loader className="animate-spin" />}>
-            <EventCarousel data={events} />
+            <EventCarousel data={sanityEvents} />
           </Suspense>
         </Section>
         <Section className="py-16">
@@ -511,36 +517,12 @@ export default async function Home() {
             ))}
           </div>
         </Section>
-
         <Section
           className="py-16 bg-elephant-700/20"
           variant={"fullWithMaxContent"}
         >
           <DonationBanner />
         </Section>
-        {/* <div>
-      <Button>Click me</Button>
-      <Button variant="outline">Click me</Button>
-      <Button variant="ghost">Click me</Button>
-      <Button variant="secondary">Click me</Button>
-
-      <Button variant="link">Click me</Button>
-    </div>
-
-    <div className="flex gap-2 px-2 items-end mt-6">
-      <Button size="lg">
-        Click me
-        <LucideAArrowDown className="w-5 h-5" />
-      </Button>
-      <Button>
-        <LucideAArrowDown className="w-5 h-5" />
-        Click me
-      </Button>
-      <Button size="icon">
-        <LucideMove className="w-4 h-4" />
-      </Button>
-      <Button size="sm">Click me</Button>
-    </div> */}
       </main>
     </Suspense>
   );

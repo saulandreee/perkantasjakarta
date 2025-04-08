@@ -7,7 +7,7 @@ import Button from "./Button";
 
 export default function DonationBanner() {
   return (
-    <div className="flex gap-16 max-w-[1280px] mx-auto px-10">
+    <div className="flex flex-col mx-auto max-w-[1280px] gap-4 md:flex-row lg:px-10 lg:gap-16">
       <div className="w-full max-w-[550px] aspect-[16/9] rounded-2xl overflow-hidden flex items-center justify-center">
         <ReactPlayer
           url={"https://www.youtube.com/watch?v=ixEcob9O3dk"}
@@ -17,14 +17,17 @@ export default function DonationBanner() {
         />
       </div>
       <div className="flex-1 w-full">
-        <SectionHeader justify={"left"}>
+        <SectionHeader
+          justify={"left"}
+          className="mb-4"
+        >
           <SectionTitle>Dukung Pelayanan Kami</SectionTitle>
-          <SectionSubtitle>Donasi Anda membantu kami untuk melayani dengan lebih baik di dalam anugerah Tuhan.</SectionSubtitle>
+          <SectionSubtitle className="px-0 mb-0">Donasi Anda membantu kami untuk melayani dengan lebih baik di dalam anugerah Tuhan.</SectionSubtitle>
         </SectionHeader>
-        <div className="">
+        <div className="flex flex-col gap-4 md:flex-row">
           <Button
             size={"lg"}
-            className={"mr-4"}
+            className={""}
           >
             Beri Donasi
           </Button>
